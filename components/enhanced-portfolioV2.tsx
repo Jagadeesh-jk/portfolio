@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -20,8 +20,6 @@ import {
   Globe2Icon,
   ServerIcon,
   DatabaseIcon,
-  ArrowUpCircleIcon,
-  MenuIcon,
 } from "lucide-react";
 
 type Theme = "dark" | "light";
@@ -51,37 +49,9 @@ function useTheme() {
 export default function EnhancedColorfulPortfolio() {
   const [expandedJob, setExpandedJob] = useState<number | null>(null);
   const { theme, toggleTheme } = useTheme();
-  const [showGoToTop, setShowGoToTop] = useState(false);
-  const [isHeroSticky, setIsHeroSticky] = useState(false);
-  const heroRef = useRef<HTMLElement>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleJobDetails = (index: number) => {
     setExpandedJob(expandedJob === index ? null : index);
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const heroHeight = heroRef.current?.offsetHeight || 0;
-      setShowGoToTop(scrollPosition > 200);
-      setIsHeroSticky(scrollPosition > heroHeight);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = "smooth";
-    return () => {
-      document.documentElement.style.scrollBehavior = "auto";
-    };
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setMobileMenuOpen(false);
   };
 
   const jobs = [
@@ -152,182 +122,91 @@ export default function EnhancedColorfulPortfolio() {
     <div
       className={`min-h-screen ${
         theme === "dark"
-          ? "bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800"
-          : "bg-gradient-to-br from-blue-50 via-white to-blue-100"
+          ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+          : "bg-gradient-to-br from-gray-100 via-white to-gray-100"
       } text-gray-900 dark:text-white`}
     >
-      <header
-        className={`transition-all duration-300 ${
-          isHeroSticky
-            ? "fixed top-0 left-0 right-0 z-50 shadow-lg"
-            : "absolute -top-full"
-        } ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}
-      >
-        <div className="max-w-4xl mx-auto p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <img
-                src="/placeholder.svg?height=50&width=50&text=KJ"
-                alt="Kasu Jagadeesh"
-                className="w-12 h-12 rounded-full object-cover border-2 border-blue-500"
-              />
-              <div>
-                <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
-                  Kasu Jagadeesh
-                </h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  (65) 91554309
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  kasu.jagadeesh@gmail.com
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full bg-opacity-20 bg-gray-600 hover:bg-opacity-30 transition-colors"
-                aria-label={
-                  theme === "dark"
-                    ? "Switch to light mode"
-                    : "Switch to dark mode"
-                }
-              >
-                {theme === "dark" ? (
-                  <SunIcon className="w-6 h-6" />
-                ) : (
-                  <MoonIcon className="w-6 h-6" />
-                )}
-              </button>
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-md bg-gray-200 dark:bg-gray-700 md:hidden"
-                aria-label="Toggle menu"
-              >
-                <MenuIcon className="w-6 h-6" />
-              </button>
-            </div>
-            <nav
-              className={`${
-                mobileMenuOpen ? "flex" : "hidden"
-              } md:flex flex-col md:flex-row absolute md:relative top-full left-0 right-0 md:top-auto bg-white dark:bg-gray-800 md:bg-transparent p-4 md:p-0 space-y-2 md:space-y-0 md:space-x-4 md:items-center`}
-            >
-              <a
-                href="#skills"
-                onClick={() => setMobileMenuOpen(false)}
-                className="hover:text-blue-500 transition-colors"
-              >
-                Skills
-              </a>
-              <a
-                href="#experience"
-                onClick={() => setMobileMenuOpen(false)}
-                className="hover:text-blue-500 transition-colors"
-              >
-                Experience
-              </a>
-              <a
-                href="#education"
-                onClick={() => setMobileMenuOpen(false)}
-                className="hover:text-blue-500 transition-colors"
-              >
-                Education
-              </a>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  toggleTheme();
-                  setMobileMenuOpen(false);
-                }}
-                className="p-2 rounded-full bg-opacity-20 bg-gray-600 hover:bg-opacity-30 transition-colors md:hidden"
-                aria-label={
-                  theme === "dark"
-                    ? "Switch to light mode"
-                    : "Switch to dark mode"
-                }
-              >
-                {theme === "dark" ? (
-                  <SunIcon className="w-6 h-6" />
-                ) : (
-                  <MoonIcon className="w-6 h-6" />
-                )}
-              </button>
-            </nav>
-          </div>
-        </div>
-      </header>
-
       <div className="max-w-4xl mx-auto p-8 pb-16">
-        <main>
-          <section ref={heroRef} className="mb-12">
-            <div className="flex flex-col md:flex-row items-center justify-between mb-8">
-              <img
-                src="/placeholder.svg?height=200&width=200&text=KJ"
-                alt="Kasu Jagadeesh"
-                className="w-48 h-48 rounded-full mb-4 md:mb-0 md:mr-8 object-cover border-4 border-gradient-to-r from-blue-400 to-blue-600"
-              />
-              <div className="text-center md:text-left">
-                <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
-                  Kasu Jagadeesh
-                </h1>
-                <p className="text-xl mb-4">Full Stack Developer</p>
-                <div className="flex flex-wrap justify-center md:justify-start gap-4 text-gray-500 dark:text-gray-300">
-                  <div className="flex items-center">
-                    <MailIcon className="w-5 h-5 mr-2" />
-                    <a
-                      href="mailto:kasu.jagadeesh@gmail.com"
-                      className="hover:text-blue-500 transition-colors"
-                    >
-                      kasu.jagadeesh@gmail.com
-                    </a>
-                  </div>
-                  <div className="flex items-center">
-                    <PhoneIcon className="w-5 h-5 mr-2" />
-                    <a
-                      href="tel:+6591554309"
-                      className="hover:text-blue-500 transition-colors"
-                    >
-                      (65) 91554309
-                    </a>
-                  </div>
-                  <div className="flex items-center">
-                    <MapPinIcon className="w-5 h-5 mr-2" />
-                    <span>Singapore</span>
-                  </div>
+        <header className="mb-12 relative">
+          <button
+            onClick={toggleTheme}
+            className="absolute top-0 right-0 p-2 rounded-full bg-opacity-20 bg-gray-600 hover:bg-opacity-30 transition-colors"
+            aria-label={
+              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            }
+          >
+            {theme === "dark" ? (
+              <SunIcon className="w-6 h-6" />
+            ) : (
+              <MoonIcon className="w-6 h-6" />
+            )}
+          </button>
+          <div className="flex flex-col md:flex-row items-center justify-between mb-8">
+            <img
+              src="/placeholder.svg?height=200&width=200&text=KJ"
+              alt="Kasu Jagadeesh"
+              className="w-48 h-48 rounded-full mb-4 md:mb-0 md:mr-8 object-cover border-4 border-gradient-to-r from-red-500 via-yellow-500 to-blue-500"
+            />
+            <div className="text-center md:text-left">
+              <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500">
+                Kasu Jagadeesh
+              </h1>
+              <div className="flex flex-wrap justify-center md:justify-start gap-4 text-gray-500 dark:text-gray-300">
+                <div className="flex items-center">
+                  <MailIcon className="w-5 h-5 mr-2" />
+                  <a
+                    href="mailto:kasu.jagadeesh@gmail.com"
+                    className="hover:text-gray-700 dark:hover:text-white transition-colors"
+                  >
+                    kasu.jagadeesh@gmail.com
+                  </a>
+                </div>
+                <div className="flex items-center">
+                  <PhoneIcon className="w-5 h-5 mr-2" />
+                  <a
+                    href="tel:+6591554309"
+                    className="hover:text-gray-700 dark:hover:text-white transition-colors"
+                  >
+                    (65) 91554309
+                  </a>
+                </div>
+                <div className="flex items-center">
+                  <MapPinIcon className="w-5 h-5 mr-2" />
+                  <span>Singapore</span>
                 </div>
               </div>
             </div>
-            <div
+          </div>
+          <div
+            className={`${
+              theme === "dark"
+                ? "bg-gradient-to-r from-red-900 via-yellow-900 to-blue-900"
+                : "bg-gradient-to-r from-red-100 via-yellow-100 to-blue-100"
+            } p-6 rounded-lg shadow-lg`}
+          >
+            <h2 className="text-2xl font-semibold mb-4">Objective</h2>
+            <p
               className={`${
-                theme === "dark"
-                  ? "bg-gradient-to-r from-gray-700 to-gray-600"
-                  : "bg-gradient-to-r from-blue-100 to-white"
-              } p-6 rounded-lg shadow-lg`}
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              } leading-relaxed`}
             >
-              <h2 className="text-2xl font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
-                Objective
-              </h2>
-              <p
-                className={`${
-                  theme === "dark" ? "text-gray-300" : "text-gray-700"
-                } leading-relaxed`}
-              >
-                I am a highly motivated computer science professional with over
-                20 years of experience, known for delivering high-quality web
-                applications that meet diverse client needs. I have extensive
-                expertise in both front-end and back-end development, along with
-                a strong background in database management. I thrive in dynamic
-                and fast-paced environments, where innovation and
-                problem-solving are key. Passionate about staying updated with
-                the latest industry trends, I am eager to take on new
-                challenges, contribute to the success of a forward-thinking
-                organization, and continue advancing in my career.
-              </p>
-            </div>
-          </section>
+              I am a highly motivated computer science professional with over 20
+              years of experience, known for delivering high-quality web
+              applications that meet diverse client needs. I have extensive
+              expertise in both front-end and back-end development, along with a
+              strong background in database management. I thrive in dynamic and
+              fast-paced environments, where innovation and problem-solving are
+              key. Passionate about staying updated with the latest industry
+              trends, I am eager to take on new challenges, contribute to the
+              success of a forward-thinking organization, and continue advancing
+              in my career.
+            </p>
+          </div>
+        </header>
 
-          <section id="skills" className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
+        <main>
+          <section className="mb-12">
+            <h2 className="text-2xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500">
               Technical Skills
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -336,8 +215,8 @@ export default function EnhancedColorfulPortfolio() {
                   key={index}
                   className={`${
                     theme === "dark"
-                      ? "bg-gradient-to-r from-gray-700 to-gray-600"
-                      : "bg-gradient-to-r from-blue-100 to-white"
+                      ? "bg-gradient-to-r from-red-900 via-yellow-900 to-blue-900"
+                      : "bg-gradient-to-r from-red-100 via-yellow-100 to-blue-100"
                   } p-4 rounded-lg flex items-center space-x-3 transition-all duration-300 hover:shadow-lg`}
                 >
                   {skill.icon}
@@ -348,7 +227,7 @@ export default function EnhancedColorfulPortfolio() {
           </section>
 
           <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
+            <h2 className="text-2xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500">
               Soft Skills
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -357,8 +236,8 @@ export default function EnhancedColorfulPortfolio() {
                   key={index}
                   className={`${
                     theme === "dark"
-                      ? "bg-gradient-to-r from-gray-700 to-gray-600"
-                      : "bg-gradient-to-r from-blue-100 to-white"
+                      ? "bg-gradient-to-r from-red-900 via-yellow-900 to-blue-900"
+                      : "bg-gradient-to-r from-red-100 via-yellow-100 to-blue-100"
                   } p-4 rounded-lg flex items-center space-x-3 transition-all duration-300 hover:shadow-lg`}
                 >
                   {skill.icon}
@@ -368,8 +247,8 @@ export default function EnhancedColorfulPortfolio() {
             </div>
           </section>
 
-          <section id="experience" className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
+          <section className="mb-12">
+            <h2 className="text-2xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500">
               Work Experience
             </h2>
             <div className="space-y-6">
@@ -378,8 +257,8 @@ export default function EnhancedColorfulPortfolio() {
                   key={index}
                   className={`${
                     theme === "dark"
-                      ? "bg-gradient-to-r from-gray-700 to-gray-600"
-                      : "bg-gradient-to-r from-blue-100 to-white"
+                      ? "bg-gradient-to-r from-red-900 via-yellow-900 to-blue-900"
+                      : "bg-gradient-to-r from-red-100 via-yellow-100 to-blue-100"
                   } rounded-lg p-6 transition-all duration-300 ease-in-out hover:shadow-lg`}
                 >
                   <div className="flex justify-between items-start mb-2">
@@ -421,10 +300,8 @@ export default function EnhancedColorfulPortfolio() {
                     <div
                       id={`job-details-${index}`}
                       className={`mt-4 ${
-                        theme === "dark"
-                          ? "text-gray-300 bg-gray-800"
-                          : "text-gray-700 bg-white"
-                      } space-y-2 animate-fadeIn rounded-lg p-4 shadow-lg`}
+                        theme === "dark" ? "text-gray-300" : "text-gray-700"
+                      } space-y-2 animate-fadeIn`}
                     >
                       <p>{job.description}</p>
                       <p className="text-sm">
@@ -437,8 +314,8 @@ export default function EnhancedColorfulPortfolio() {
             </div>
           </section>
 
-          <section id="education">
-            <h2 className="text-2xl font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
+          <section>
+            <h2 className="text-2xl font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500">
               Education
             </h2>
             <ul
@@ -514,23 +391,6 @@ export default function EnhancedColorfulPortfolio() {
           </div>
         </footer>
       </div>
-      {showGoToTop && (
-        <button
-          onClick={scrollToTop}
-          className={`fixed bottom-8 right-8 p-2 rounded-full ${
-            theme === "dark"
-              ? "bg-gray-700 hover:bg-gray-600"
-              : "bg-blue-100 hover:bg-blue-200"
-          } transition-colors duration-300 shadow-lg`}
-          aria-label="Go to top"
-        >
-          <ArrowUpCircleIcon
-            className={`w-8 h-8 ${
-              theme === "dark" ? "text-white" : "text-blue-600"
-            }`}
-          />
-        </button>
-      )}
     </div>
   );
 }

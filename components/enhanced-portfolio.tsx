@@ -23,6 +23,8 @@ import {
   ArrowUpCircleIcon,
   MenuIcon,
 } from "lucide-react";
+import Image from "next/image";
+import profilePic from "../images/jagadeesh.jpg";
 
 type Theme = "dark" | "light";
 
@@ -166,8 +168,8 @@ export default function EnhancedColorfulPortfolio() {
         <div className="max-w-4xl mx-auto p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <img
-                src="/placeholder.svg?height=50&width=50&text=KJ"
+              <Image
+                src={profilePic}
                 alt="Kasu Jagadeesh"
                 className="w-12 h-12 rounded-full object-cover border-2 border-blue-500"
               />
@@ -261,10 +263,10 @@ export default function EnhancedColorfulPortfolio() {
         <main>
           <section ref={heroRef} className="mb-12">
             <div className="flex flex-col md:flex-row items-center justify-between mb-8">
-              <img
-                src="/placeholder.svg?height=200&width=200&text=KJ"
+              <Image
+                src={profilePic}
                 alt="Kasu Jagadeesh"
-                className="w-48 h-48 rounded-full mb-4 md:mb-0 md:mr-8 object-cover border-4 border-gradient-to-r from-blue-400 to-blue-600"
+                className="w-40 h-40 rounded-full object-cover border-2 border-blue-500"
               />
               <div className="text-center md:text-left">
                 <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
